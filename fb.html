@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to Career Finder...</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            text-align: center;
+        }
+        .redirect-container {
+            max-width: 600px;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0066cc;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <script>
+        // Handle Facebook URL parameters and clean them
+        window.onload = function() {
+            try {
+                // Get current URL parameters
+                var urlParams = new URLSearchParams(window.location.search);
+                
+                // Extract important parameters
+                var companyParam = urlParams.get('company');
+                var countryParam = urlParams.get('country');
+                var departmentParam = urlParams.get('department');
+                var positionParam = urlParams.get('position');
+                var viewParam = urlParams.get('view');
+                
+                // Create a new clean URL
+                var cleanParams = new URLSearchParams();
+                if (companyParam) cleanParams.append('company', companyParam);
+                if (countryParam) cleanParams.append('country', countryParam);
+                if (departmentParam) cleanParams.append('department', departmentParam);
+                if (positionParam) cleanParams.append('position', positionParam);
+                if (viewParam) cleanParams.append('view', viewParam);
+                
+                // Construct the clean URL
+                var redirectUrl = 'index.html';
+                if (cleanParams.toString()) {
+                    redirectUrl += '?' + cleanParams.toString();
+                }
+                
+                // Redirect to the clean URL
+                document.getElementById('redirect-message').textContent = 'Redirecting to Career Finder...';
+                setTimeout(function() {
+                    window.location.href = redirectUrl;
+                }, 1000);
+            } catch (e) {
+                console.error("Error handling URL parameters:", e);
+                // Fallback redirect
+                window.location.href = 'index.html';
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="redirect-container">
+        <h1>Career Finder</h1>
+        <p id="redirect-message">Preparing your experience...</p>
+        <div class="loader"></div>
+        <p>Please wait while we process your request...</p>
+    </div>
+</body>
+</html>
